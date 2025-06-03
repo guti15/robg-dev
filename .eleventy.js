@@ -8,6 +8,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/assets");
   eleventyConfig.addPassthroughCopy({ "doc": "doc" });
   eleventyConfig.addPassthroughCopy({ "img": "img" });
+  eleventyConfig.addPassthroughCopy("src/CNAME");
   
   // Date formatting filter
   eleventyConfig.addFilter("readableDate", dateObj => {
