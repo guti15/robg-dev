@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" class="light-theme">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if title %}{{ title }} - {% endif %}{{ metadata.title }}</title>
+  <meta name="description" content="{% if description %}{{ description }}{% else %}{{ metadata.description }}{% endif %}">
+  <meta name="author" content="{{ metadata.author.name }}">
+  
+  <!-- SEO Meta Tags -->
+  <meta name="keywords" content="{{ metadata.keywords | join(', ') }}">
+  <meta property="og:title" content="{% if title %}{{ title }} - {% endif %}{{ metadata.title }}">
+  <meta property="og:description" content="{% if description %}{{ description }}{% else %}{{ metadata.description }}{% endif %}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ metadata.url }}{{ page.url }}">
+  <meta property="og:image" content="{{ metadata.url }}/assets/img/profile-og.jpg">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%2314213d%22/><text x=%2250%22 y=%2270%22 font-family=%22Arial, sans-serif%22 font-size=%2260%22 font-weight=%22bold%22 text-anchor=%22middle%22 fill=%22white%22>R</text></svg>">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  
+  <!-- Preload theme script to prevent flash of unstyled content -->
+  <script>
+    // Check for saved theme preference or use system preference
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+    
+    // Apply theme immediately to prevent flash
+    document.documentElement.classList.remove('light-theme', 'dark-theme');
+    document.documentElement.classList.add(theme + '-theme');
+  </script>
+</head>
+<body>
+  <div class="site-container">
+    <header class="site-header">
+      <div class="container">
+        <div class="header-content">
+          <a href="/" class="site-logo">Robert Gutierrez</a>
+          <nav class="site-nav">
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/pages/crypto">Crypto</a></li>
+              <li><a href="/blog">Blog</a></li>
+              <li>
+                <button id="theme-toggle" aria-label="Toggle dark mode">
+                  <span class="theme-toggle-icon light">☀️</span>
+                  <span class="theme-toggle-icon dark">🌙</span>
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main class="site-content">
+      <div class="container">
+        {{ content | safe }}
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-info">
+            <p>&copy; <span id="current-year"></span> {{ metadata.author.name }}. All rights reserved.</p>
+          </div>
+          <div class="footer-links">
+            <a href="{{ metadata.social.linkedin }}" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="/doc/RobertG_Resume.docx" target="_blank">Resume</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="/assets/js/theme-switcher.js"></script>
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>
