@@ -60,5 +60,6 @@ DNS changes can take up to 48 hours to propagate, but often happen much faster.
 Once the DNS changes have propagated, your website should be accessible at:
 - https://robg.dev
 - https://www.robg.dev
+- robg.dev 
 
 The GitHub Actions workflow will automatically build and deploy your site whenever you push changes to the main branch.
