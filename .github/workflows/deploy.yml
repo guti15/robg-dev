@@ -37,6 +37,14 @@ jobs:
       - name: Build site
         run: npm run build
 
+      - name: inspection and debug
+        run: |
+          echo "time to see what we got. "
+          ls -a 
+          less index.html
+          ls public/
+
+
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
