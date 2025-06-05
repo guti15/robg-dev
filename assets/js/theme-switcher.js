@@ -13,10 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('theme', theme);
   };
   
-  // Check for saved theme preference or use system preference
+  // Check for saved theme preference or default to dark
   const savedTheme = localStorage.getItem('theme');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+  const currentTheme = savedTheme || 'dark';
   
   // Apply the current theme
   setTheme(currentTheme);
@@ -32,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
     // Only change theme if user hasn't manually set a preference
     if (!localStorage.getItem('theme')) {
-      setTheme(e.matches ? 'dark' : 'light');
+      setTheme('dark'); // Always default to dark theme
     }
   });
 });
