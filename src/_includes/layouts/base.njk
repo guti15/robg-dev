@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="light-theme">
+<html lang="en" class="dark-theme">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,10 +23,9 @@
   
   <!-- Preload theme script to prevent flash of unstyled content -->
   <script>
-    // Check for saved theme preference or use system preference
+    // Check for saved theme preference or default to dark
     const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+    const theme = savedTheme || 'dark';
     
     // Apply theme immediately to prevent flash
     document.documentElement.classList.remove('light-theme', 'dark-theme');
