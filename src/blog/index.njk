@@ -13,74 +13,53 @@ description: Robert Gutierrez's blog - Thoughts on software engineering, technol
       technology trends, and other topics I'm passionate about.
     </p>
     <p>
-      Stay tuned for upcoming posts. In the meantime, feel free to connect with me on 
+      Feel free to explore the posts below or connect with me on 
       <a href="{{ metadata.social.linkedin }}" target="_blank" rel="noopener noreferrer">LinkedIn</a>.
     </p>
   </div>
   
-  <div class="blog-coming-soon">
-    <h2>Coming Soon</h2>
+  <div class="category-filter">
+    <h2 class="category-filter-title">Filter by Category</h2>
+    <div class="category-buttons">
+      <button class="category-btn active" data-category="all">All</button>
+      <button class="category-btn" data-category="Development">Development</button>
+      <button class="category-btn" data-category="Personal">Personal</button>
+      <button class="category-btn" data-category="Social">Social</button>
+    </div>
+  </div>
+  
+  <div class="blog-posts">
     <ul class="post-list">
-      <li class="post-item coming-soon">
-        <div class="post-date">Coming Soon</div>
-        <h3 class="post-title">Python Best Practices for Clean, Maintainable Code</h3>
-        <p class="post-excerpt">
-          A deep dive into Python coding standards, design patterns, and techniques that lead to more maintainable and efficient code.
-        </p>
-      </li>
-      
-      <li class="post-item coming-soon">
-        <div class="post-date">Coming Soon</div>
-        <h3 class="post-title">Getting Started with DevOps: A Practical Guide</h3>
-        <p class="post-excerpt">
-          An introduction to DevOps principles and practices, with practical examples and tools to help you get started.
-        </p>
-      </li>
-      
-      <li class="post-item coming-soon">
-        <div class="post-date">Coming Soon</div>
-        <h3 class="post-title">Understanding Blockchain Technology: Beyond Cryptocurrency</h3>
-        <p class="post-excerpt">
-          Exploring the fundamentals of blockchain technology and its potential applications beyond cryptocurrency.
-        </p>
-      </li>
+      {%- for post in collections.all | reverse -%}
+        {%- if post.inputPath.includes('/blog/posts/') -%}
+          <li class="post-item" data-category="{{ post.data.category }}">
+            <div class="post-thumbnail">
+              <a href="{{ post.url }}">
+                <img src="{{ post.data.featuredImage }}" alt="{{ post.data.featuredImageAlt or post.data.title }}">
+              </a>
+            </div>
+            <div class="post-content-preview">
+              <div class="post-meta-info">
+                <div class="post-category {{ post.data.category | lower }}">{{ post.data.category }}</div>
+                <div class="post-date">{{ post.data.date | readableDate }}</div>
+              </div>
+              <h3 class="post-title">
+                <a href="{{ post.url }}">{{ post.data.title }}</a>
+              </h3>
+              <p class="post-excerpt">
+                {{ post.data.description }}
+              </p>
+              <div class="post-reactions-preview">
+                <span class="reaction-preview">😢</span>
+                <span class="reaction-preview">🎉</span>
+                <span class="reaction-preview">🤦</span>
+                <span class="reaction-preview">❤️</span>
+              </div>
+              <a href="{{ post.url }}" class="read-more">Read more →</a>
+            </div>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
     </ul>
   </div>
 </section>
-
-<style>
-  .post-list {
-    list-style: none;
-    padding: 0;
-    margin: 2rem 0;
-  }
-  
-  .post-item {
-    margin-bottom: 2rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid var(--color-border);
-  }
-  
-  .post-item:last-child {
-    border-bottom: none;
-  }
-  
-  .post-date {
-    font-size: var(--font-size-small);
-    color: var(--color-text-muted);
-    margin-bottom: 0.5rem;
-  }
-  
-  .post-title {
-    margin-bottom: 0.5rem;
-  }
-  
-  .post-excerpt {
-    color: var(--color-text-secondary);
-  }
-  
-  .coming-soon .post-title,
-  .coming-soon .post-excerpt {
-    opacity: 0.7;
-  }
-</style>
