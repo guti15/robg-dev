@@ -1,0 +1,109 @@
+---
+layout: layouts/base.njk
+---
+
+<article class="blog-post">
+  <header class="post-header">
+    <div class="post-category">{{ category }}</div>
+    <h1 class="post-title">{{ title }}</h1>
+    <div class="post-meta">
+      <time datetime="{{ date | htmlDateString }}">{{ date | readableDate }}</time>
+    </div>
+  </header>
+
+  {% if featuredImage %}
+  <div class="post-featured-image">
+    <img src="{{ featuredImage }}" alt="{{ featuredImageAlt or title }}">
+  </div>
+  {% endif %}
+
+  {% if carousel %}
+  <div class="carousel">
+    <div class="carousel-container">
+      {% for slide in carousel.slides %}
+      <div class="carousel-slide">
+        <img src="{{ slide.image }}" alt="{{ slide.alt or title }}">
+      </div>
+      {% endfor %}
+    </div>
+    <button class="carousel-button prev" aria-label="Previous slide">❮</button>
+    <button class="carousel-button next" aria-label="Next slide">❯</button>
+  </div>
+  {% endif %}
+
+  <div class="post-content">
+    {{ content | safe }}
+  </div>
+
+  {% if bottomImage %}
+  <div class="post-bottom-image">
+    <img src="{{ bottomImage }}" alt="{{ bottomImageAlt or title }}">
+  </div>
+  {% endif %}
+
+  <div class="post-reactions">
+    <h3>Reactions</h3>
+    <div class="reaction-buttons">
+      <button class="reaction-btn" data-reaction="cry" aria-label="Cry reaction">
+        <span class="emoji">😢</span>
+        <span class="count">0</span>
+      </button>
+      <button class="reaction-btn" data-reaction="tada" aria-label="Tada reaction">
+        <span class="emoji">🎉</span>
+        <span class="count">0</span>
+      </button>
+      <button class="reaction-btn" data-reaction="facepalm" aria-label="Facepalm reaction">
+        <span class="emoji">🤦</span>
+        <span class="count">0</span>
+      </button>
+      <button class="reaction-btn" data-reaction="heart" aria-label="Heart reaction">
+        <span class="emoji">❤️</span>
+        <span class="count">0</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="post-share">
+    <h3>Share</h3>
+    <div class="share-buttons">
+      <a href="https://twitter.com/intent/tweet?text={{ title | urlencode }}&url={{ metadata.url }}{{ page.url | urlencode }}" 
+         target="_blank" rel="noopener noreferrer" class="share-btn twitter" aria-label="Share on Twitter">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+        </svg>
+        <span>Twitter</span>
+      </a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ metadata.url }}{{ page.url | urlencode }}" 
+         target="_blank" rel="noopener noreferrer" class="share-btn linkedin" aria-label="Share on LinkedIn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+          <rect x="2" y="9" width="4" height="12"></rect>
+          <circle cx="4" cy="4" r="2"></circle>
+        </svg>
+        <span>LinkedIn</span>
+      </a>
+      <a href="https://www.reddit.com/submit?url={{ metadata.url }}{{ page.url | urlencode }}&title={{ title | urlencode }}" 
+         target="_blank" rel="noopener noreferrer" class="share-btn reddit" aria-label="Share on Reddit">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <circle cx="12" cy="9" r="3"></circle>
+          <path d="M6.5 15a5.5 5.5 0 0 0 11 0"></path>
+        </svg>
+        <span>Reddit</span>
+      </a>
+      <button class="share-btn copy" data-url="{{ metadata.url }}{{ page.url }}" aria-label="Copy URL">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        <span>Copy URL</span>
+      </button>
+    </div>
+  </div>
+</article>
+
+<div class="post-navigation">
+  <div class="container">
+    <a href="/blog" class="back-to-blog">← Back to all posts</a>
+  </div>
+</div>
