@@ -22,9 +22,37 @@
   <meta name="msapplication-TileImage" content="/img/fav-icon-192.png">
   <meta name="msapplication-TileColor" content="#14213d">
   
-  <!-- CSS -->
-  <link rel="stylesheet" href="/assets/css/styles.css">
-  <link rel="stylesheet" href="/assets/css/blog.css">
+  <!-- Inline critical CSS to prevent render blocking -->
+  <style>
+    /* Theme setup - prevents flash */
+    .dark-theme { background: #0a0a0a; color: #e0e0e0; }
+    .light-theme { background: #ffffff; color: #333333; }
+    
+    /* Critical above-the-fold styles */
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    .site-container { min-height: 100vh; display: flex; flex-direction: column; }
+    .site-header { padding: 1rem 0; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+    .hero { text-align: center; padding: 2rem 0; }
+    .hero-image { max-width: 200px; border-radius: 50%; }
+    .hero-title { font-size: 2.5rem; margin: 1rem 0; }
+    
+    /* Add other critical styles here */
+  </style>
+  
+  <!-- Preload CSS files -->
+  <link rel="preload" href="/assets/css/styles.css" as="style">
+  <link rel="preload" href="/assets/css/blog.css" as="style">
+  
+  <!-- Load CSS asynchronously -->
+  <link rel="stylesheet" href="/assets/css/styles.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/assets/css/blog.css" media="print" onload="this.media='all'">
+  
+  <!-- Fallback for browsers with JS disabled -->
+  <noscript>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/blog.css">
+  </noscript>
   
   <!-- Preload theme script to prevent flash of unstyled content -->
   <script>
@@ -81,10 +109,15 @@
     </footer>
   </div>
 
-  <!-- JavaScript -->
-  <script src="/assets/js/theme-switcher.js"></script>
-  <script src="/assets/js/main.js"></script>
+  <!-- JavaScript - all deferred or async -->
+  <script src="/assets/js/theme-switcher.js" defer></script>
+  <script src="/assets/js/main.js" defer></script>
   <script src="/assets/js/carousel.js" defer></script>
   <script src="/assets/js/blog.js" defer></script>
+  
+  <!-- Set current year -->
+  <script>
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
