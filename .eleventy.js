@@ -2,6 +2,7 @@ const { DateTime } = require("luxon");
 const CleanCSS = require("clean-css");
 const htmlmin = require("html-minifier");
 const markdownIt = require("markdown-it");
+const Image = require("@11ty/eleventy-img"); 
 
 module.exports = function(eleventyConfig) {
   // Copy static files directly to output
@@ -11,44 +12,31 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/CNAME");
 
   // ADD IMAGE OPTIMIZATION HERE
-  eleventyConfig.addNunjucksAsyncShortcode("image", async function(src, alt, sizes) {
-    let metadata = await Image(src, {
-      widths: [300, 600, 1200],
-      formats: ["webp", "jpeg"],
-      outputDir: "./public/img/optimized/",  // Changed to avoid conflict with your existing img folder
-      urlPath: "/img/optimized/",
-      sharpOptions: {
-        quality: 80
-      }
-    });
-
-    let imageAttributes = {
-      alt,
-      sizes: sizes || "100vw",
-      loading: "lazy",
-      decoding: "async",
-    };
-
-    return Image.generateHTML(metadata, imageAttributes);
+eleventyConfig.addNunjucksAsyncShortcode("image", async function(src, alt, sizes, className) {
+  let metadata = await Image(src, {
+    widths: [200, 400, 600], // Smaller sizes for your use case
+    formats: ["webp", "jpeg"],
+    outputDir: "./public/img/optimized/",
+    urlPath: "/img/optimized/",
+    sharpOptions: {
+      quality: 80
+    }
   });
 
-  //  Simpler image shortcode for fixed-width images
-    eleventyConfig.addNunjucksAsyncShortcode("imageFixed", async function(src, alt, width) {
-    let metadata = await Image(src, {
-      widths: [width],
-      formats: ["webp", "jpeg"],
-      outputDir: "./public/img/optimized/",
-      urlPath: "/img/optimized/",
-    });
+  let imageAttributes = {
+    alt,
+    sizes: sizes || "200px", // Default to 200px instead of responsive
+    loading: "lazy",
+    decoding: "async",
+    class: className || ""
+  };
 
-    let imageAttributes = {
-      alt,
-      loading: "lazy",
-      decoding: "async",
-    };
+  // Don't include width/height attributes that override CSS
+  delete imageAttributes.width;
+  delete imageAttributes.height;
 
-    return Image.generateHTML(metadata, imageAttributes);
-  });
+  return Image.generateHTML(metadata, imageAttributes);
+});
   
   // Date formatting filter
   eleventyConfig.addFilter("readableDate", dateObj => {
